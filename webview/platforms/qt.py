@@ -443,7 +443,10 @@ class BrowserView(QMainWindow):
         self.on_top_trigger.connect(self.on_set_on_top)
 
         if is_webengine and platform.system() != 'OpenBSD':
-            self.channel = QWebChannel(self.webview.page())
+            if PYSIDE6:
+                self.channel = QWebChannel()
+            else:
+                self.channel = QWebChannel(self.webview.page())
             self.webview.page().setWebChannel(self.channel)
 
         if window.fullscreen:
