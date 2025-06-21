@@ -166,7 +166,7 @@ class BrowserView:
             self.pywebview_window.native = self
             self.real_url = None
             self.Text = window.title
-            self.Size = Size(window.initial_width, window.initial_height)
+            self.ClientSize = Size(window.initial_width, window.initial_height)
             self.MinimumSize = Size(window.min_size[0], window.min_size[1])
 
             self.AutoScaleDimensions = SizeF(96.0, 96.0)
