@@ -415,11 +415,12 @@ class BrowserView:
             x - y for x, y in zip(self.window.get_position(), [event.x_root, event.y_root])
         ]
         self.move_progress = True
+        self.press_time = event.time
 
     def on_mouse_move(self, _, event):
         if self.move_progress:
             point = [x + y for x, y in zip((event.x_root, event.y_root), self.point_diff)]
-            self.window.move(point[0], point[1])
+            self.window.begin_move_drag(1, point[0], point[1], self.press_time)
 
     def show(self):
         self.window.show_all()
