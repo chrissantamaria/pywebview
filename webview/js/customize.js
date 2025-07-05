@@ -55,6 +55,17 @@
         function onMouseDown(ev) {
             initialX = ev.clientX;
             initialY = ev.clientY;
+
+            if (
+                platform === 'gtkwebkit2' ||
+                platform === 'qtwebengine' ||
+                platform === 'qtwebkit' ||
+                platform === 'cocoa'
+            ) {
+                window.pywebview._jsApiCallback('pywebviewBeginDrag', null, 'beginDrag');
+                return;
+            }
+
             window.addEventListener('mouseup', onMouseUp);
             window.addEventListener('mousemove', onMouseMove);
         }

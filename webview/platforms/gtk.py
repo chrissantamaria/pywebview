@@ -470,6 +470,9 @@ class BrowserView:
     def move(self, x, y):
         self.window.move(self.screen.x+x, self.screen.y+y)
 
+    def begin_drag(self):
+        self.window.begin_move_drag(1, 0, 0, Gdk.CURRENT_TIME)
+
     def maximize(self):
         glib.idle_add(self.window.maximize)
 
@@ -764,6 +767,13 @@ def move(x, y, uid):
     if i:
         glib.idle_add(_move)
 
+def begin_drag(uid):
+    def _begin_drag():
+        i.begin_drag()
+
+    i = BrowserView.instances.get(uid)
+    if i:
+        glib.idle_add(_begin_drag)
 
 def hide(uid):
     i = BrowserView.instances.get(uid)
