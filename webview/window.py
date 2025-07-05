@@ -425,6 +425,13 @@ class Window:
         """
         self.gui.move(x, y, self.uid)
 
+    @_shown_call
+    def beginDrag(self) -> None:
+        """
+        Begin dragging the window. This is only supported on some platforms.
+        """
+        self.gui.begin_drag(self.uid)
+
     @_before_load_call
     def run_js(self, script: str) -> Any:
         """

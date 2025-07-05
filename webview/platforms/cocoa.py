@@ -796,6 +796,13 @@ class BrowserView:
         flipped_y = self.screen.size.height - y
         self.window.setFrameTopLeftPoint_(AppKit.NSPoint(self.screen.origin.x + x, self.screen.origin.y + flipped_y))
 
+    def begin_drag(self):
+        def _begin_drag():
+            current_event = AppKit.NSApp.currentEvent()
+            self.window.performWindowDragWithEvent_(current_event)
+
+        AppHelper.callAfter(_begin_drag)
+
     def center(self):
         window_frame = self.window.frame()
 
@@ -1468,6 +1475,12 @@ def move(x, y, uid):
     i = BrowserView.instances.get(uid)
     if i:
         AppHelper.callAfter(i.move, x, y)
+
+
+def begin_drag(uid):
+    i = BrowserView.instances.get(uid)
+    if i:
+        i.begin_drag()
 
 
 def get_current_url(uid):

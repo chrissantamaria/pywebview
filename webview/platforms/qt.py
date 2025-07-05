@@ -787,6 +787,9 @@ class BrowserView(QMainWindow):
     def move_window(self, x, y):
         self.window_move_trigger.emit(x, y)
 
+    def begin_drag(self):
+        self.windowHandle().startSystemMove()
+
     def maximize(self):
         self.window_maximize_trigger.emit()
 
@@ -1057,6 +1060,12 @@ def move(x, y, uid):
     i = BrowserView.instances.get(uid)
     if i:
         i.move_window(x, y)
+
+
+def begin_drag(uid):
+    i = BrowserView.instances.get(uid)
+    if i:
+        i.begin_drag()
 
 
 def create_confirmation_dialog(title, message, uid):

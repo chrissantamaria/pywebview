@@ -271,6 +271,11 @@ def js_bridge_call(window: Window, func_name: str, param: Any, value_id: str) ->
         window.move(*param)
         return
 
+    if func_name == 'pywebviewBeginDrag':
+        if hasattr(window, 'beginDrag'):
+            window.beginDrag()
+        return
+
     if func_name == 'pywebviewEventHandler':
         event = param['event']
         node_id = param['nodeId']
