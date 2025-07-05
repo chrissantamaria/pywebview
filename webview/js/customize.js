@@ -59,9 +59,46 @@
             window.addEventListener('mousemove', onMouseMove);
         }
 
+        function addDragListenerToElement(element) {
+            if (element.hasAttribute('data-pywebview-drag-listener')) return
+
+            element.addEventListener('mousedown', onMouseDown);
+            element.setAttribute('data-pywebview-drag-listener', 'true');
+        }
+
+        function addDragListeners(element) {
+            if (element.nodeType !== Node.ELEMENT_NODE) return
+
+            if (element.matches && element.matches('%(drag_selector)s')) {
+                addDragListenerToElement(element);
+            }
+
+            var matchingChildren = element.querySelectorAll('%(drag_selector)s');
+            matchingChildren.forEach(function(child) {
+                addDragListenerToElement(child);
+            });
+        }
+
         var dragBlocks = document.querySelectorAll('%(drag_selector)s');
         for (var i=0; i < dragBlocks.length; i++) {
-            dragBlocks[i].addEventListener('mousedown', onMouseDown);
+            addDragListenerToElement(dragBlocks[i]);
+        }
+
+        // Set up MutationObserver to watch for new elements
+        if (window.MutationObserver) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        addDragListeners(node);
+                    });
+                });
+            });
+
+            // Start observing the document for added child nodes
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
         }
             // easy drag for edge chromium
         if ('%(easy_drag)s' === 'True') {
