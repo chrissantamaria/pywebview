@@ -53,6 +53,13 @@
         }
 
         function onMouseDown(ev) {
+            if (
+                '%(strict_drag_regions)s' === 'True' &&
+                !ev.target.matches('%(drag_selector)s')
+            ) {
+                return
+            }
+
             initialX = ev.clientX;
             initialY = ev.clientY;
 

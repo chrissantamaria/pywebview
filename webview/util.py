@@ -369,6 +369,7 @@ def load_js_files(window: Window, platform: str) -> str:
                 params = {
                     'text_select': str(window.text_select),
                     'drag_selector': webview.settings['DRAG_REGION_SELECTOR'],
+                    'strict_drag_regions': str(webview.settings['STRICT_DRAG_REGIONS']),
                     'zoomable': str(window.zoomable),
                     'draggable': str(window.draggable),
                     'easy_drag': str(platform == 'edgechromium' and window.easy_drag and window.frameless)
